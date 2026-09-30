@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Inventory Reservation Engine Architecture</title>
+  <desc id="desc">Java desktop and console entry points connect through service and DAO layers to MySQL. Shows reservation locking, expiry processing, order flows, and database tables.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#111c30"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#020617" flood-opacity=".38"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#7890ad"/></marker>
+    <marker id="arrowCyan" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22d3ee"/></marker>
+    <style>
+      text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#e5edf8}.title{font-size:34px;font-weight:700}.sub{font-size:15px;fill:#9fb0c7}.section{font-size:13px;font-weight:700;letter-spacing:1.6px;fill:#89a0bd}.card{fill:#152238;stroke:#2a3d59;stroke-width:1.3}.card2{fill:#101b2d;stroke:#29405c;stroke-width:1.2}.head{font-size:18px;font-weight:700}.body{font-size:14px;fill:#b7c5d8}.small{font-size:12px;fill:#9fb0c7}.chip{font-size:11px;font-weight:700;letter-spacing:.5px}
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="1450" cy="80" r="230" fill="#1d4ed8" opacity=".07"/><circle cx="120" cy="900" r="270" fill="#06b6d4" opacity=".045"/>
+  <text x="70" y="70" class="title">Inventory Reservation Engine</text>
+  <text x="70" y="101" class="sub">Java 17 · Swing desktop + console demo · JDBC transactions · MySQL / InnoDB</text>
+  <rect x="1304" y="48" width="226" height="38" rx="19" fill="#102b3a" stroke="#1c6476"/><circle cx="1326" cy="67" r="5" fill="#22d3ee"/><text x="1340" y="72" class="chip" fill="#a5f3fc">SINGLE-PROCESS APPLICATION</text>
+
+  <text x="70" y="155" class="section">APPLICATION SURFACES</text>
+  <rect x="70" y="175" width="610" height="154" rx="16" class="card" filter="url(#shadow)"/>
+  <rect x="70" y="175" width="7" height="154" rx="3" fill="url(#accent)"/>
+  <text x="98" y="211" class="head">Swing desktop application</text><text x="98" y="238" class="body">SwingApp → MainFrame · dashboard · products &amp; stock · reservations</text><text x="98" y="261" class="body">orders · concurrency test · DB connection status</text>
+  <rect x="98" y="282" width="130" height="25" rx="12" fill="#16354a"/><text x="112" y="299" class="chip" fill="#67e8f9">3s EXPIRY SWEEP</text><text x="241" y="299" class="small">background worker starts with the UI</text>
+  <rect x="710" y="175" width="340" height="154" rx="16" class="card" filter="url(#shadow)"/>
+  <text x="738" y="211" class="head">Console demo</text><text x="738" y="240" class="body">Main.main() seeds sample data, then launches</text><text x="738" y="263" class="body">10 concurrent attempts via ExecutorService.</text><text x="738" y="299" class="small">Demonstrates contention and no overselling.</text>
+
+  <text x="70" y="386" class="section">BUSINESS &amp; PERSISTENCE</text>
+  <rect x="70" y="407" width="320" height="278" rx="16" class="card" filter="url(#shadow)"/>
+  <text x="98" y="447" class="head">Service layer</text><text x="98" y="474" class="small">VALIDATION · BUSINESS RULES · TRANSACTIONS</text>
+  <rect x="96" y="495" width="268" height="43" rx="9" class="card2"/><text x="114" y="522" class="body">ReservationService</text>
+  <rect x="96" y="548" width="268" height="43" rx="9" class="card2"/><text x="114" y="575" class="body">ProductService · InventoryService</text>
+  <rect x="96" y="601" width="268" height="43" rx="9" class="card2"/><text x="114" y="628" class="body">OrderService</text>
+  <text x="98" y="666" class="small">ReservationExpiryWorker calls expiry sweep</text>
+
+  <rect x="455" y="407" width="340" height="278" rx="16" class="card" filter="url(#shadow)"/>
+  <text x="483" y="447" class="head">DAO layer</text><text x="483" y="474" class="small">PREPARED SQL · ROW MAPPING · PERSISTENCE</text>
+  <rect x="481" y="495" width="288" height="43" rx="9" class="card2"/><text x="499" y="522" class="body">UserDAO · ProductDAO</text>
+  <rect x="481" y="548" width="288" height="43" rx="9" class="card2"/><text x="499" y="575" class="body">InventoryDAO · ReservationDAO</text>
+  <rect x="481" y="601" width="288" height="43" rx="9" class="card2"/><text x="499" y="628" class="body">OrderDAO · OrderItemDAO</text>
+  <rect x="860" y="407" width="250" height="278" rx="16" class="card" filter="url(#shadow)"/>
+  <text x="888" y="447" class="head">JDBC connection</text><text x="888" y="478" class="body">DBConnection</text><text x="888" y="505" class="small">DriverManager · MySQL Connector/J</text>
+  <rect x="886" y="536" width="198" height="77" rx="10" fill="#101b2d" stroke="#29405c"/><text x="903" y="562" class="small">DB_URL (default :3308)</text><text x="903" y="585" class="small">DB_USERNAME · DB_PASSWORD</text>
+  <text x="888" y="650" class="small">Credentials supplied via environment</text>
+
+  <rect x="1180" y="170" width="350" height="515" rx="18" fill="#10243a" stroke="#2b5876" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="1180" y="170" width="350" height="62" rx="18" fill="#153752"/><path d="M1180 214h350v18h-350z" fill="#153752"/>
+  <text x="1210" y="209" class="head">MySQL 8+ · InnoDB</text><text x="1210" y="259" class="small">DATABASE: inventory_reservation_engine</text>
+  <rect x="1208" y="282" width="294" height="47" rx="9" class="card2"/><text x="1227" y="311" class="body">users</text><text x="1450" y="311" class="small">identity</text>
+  <rect x="1208" y="340" width="294" height="47" rx="9" class="card2"/><text x="1227" y="369" class="body">products</text><text x="1450" y="369" class="small">catalog</text>
+  <rect x="1208" y="398" width="294" height="47" rx="9" fill="#123248" stroke="#23758c"/><text x="1227" y="427" class="body">inventory</text><text x="1412" y="427" class="small">stock counts</text>
+  <rect x="1208" y="456" width="294" height="47" rx="9" fill="#123248" stroke="#23758c"/><text x="1227" y="485" class="body">reservations</text><text x="1406" y="485" class="small">status · expiry</text>
+  <rect x="1208" y="514" width="294" height="47" rx="9" class="card2"/><text x="1227" y="543" class="body">orders</text><text x="1450" y="543" class="small">header</text>
+  <rect x="1208" y="572" width="294" height="47" rx="9" class="card2"/><text x="1227" y="601" class="body">order_items</text><text x="1410" y="601" class="small">line items</text>
+  <text x="1210" y="654" class="small">FK constraints · checks · unique keys</text>
+
+  <!-- directional connectors -->
+  <path d="M680 252H695V360H230V395" fill="none" stroke="#7890ad" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M880 329V363H280V395" fill="none" stroke="#7890ad" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M390 545H445" fill="none" stroke="#7890ad" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M795 545H850" fill="none" stroke="#7890ad" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M1110 545H1170" fill="none" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
+  <text x="1113" y="525" class="small" fill="#67e8f9">JDBC</text>
+  <path d="M352 661V720H1280V695" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#arrow)"/>
+  <text x="658" y="712" class="small" fill="#fcd34d">Expiry sweep: ACTIVE overdue → EXPIRED + release reserved stock</text>
+
+  <rect x="70" y="755" width="1040" height="170" rx="16" fill="#111e31" stroke="#2b3e58"/>
+  <text x="98" y="793" class="section" fill="#67e8f9">RESERVATION TRANSACTION · ATOMIC STOCK HOLD</text>
+  <g>
+    <circle cx="119" cy="842" r="17" fill="#16445b"/><text x="114" y="847" class="chip">1</text><text x="147" y="847" class="body">Validate user, product, quantity</text>
+    <circle cx="432" cy="842" r="17" fill="#16445b"/><text x="427" y="847" class="chip">2</text><text x="460" y="847" class="body">SELECT inventory FOR UPDATE</text>
+    <circle cx="733" cy="842" r="17" fill="#16445b"/><text x="728" y="847" class="chip">3</text><text x="761" y="847" class="body">Move available → reserved</text>
+    <circle cx="119" cy="890" r="17" fill="#16445b"/><text x="114" y="895" class="chip">4</text><text x="147" y="895" class="body">Insert ACTIVE reservation + expiry</text>
+    <circle cx="540" cy="890" r="17" fill="#16445b"/><text x="535" y="895" class="chip">5</text><text x="568" y="895" class="body">Commit; on failure rollback</text>
+  </g>
+  <rect x="1150" y="755" width="380" height="170" rx="16" fill="#241f19" stroke="#70532c"/>
+  <text x="1180" y="793" class="section" fill="#fbbf24">ORDER PATHS</text>
+  <text x="1180" y="831" class="body">OrderService creates PENDING order + items</text>
+  <text x="1180" y="856" class="body">inside one transaction.</text>
+  <text x="1180" y="891" class="small">Confirming a reservation also creates a CONFIRMED order.</text>
+  <text x="70" y="966" class="small">Inventory reservation is row-locked per product. OrderService.createOrder does not itself decrement or reserve stock.</text>
+</svg>
