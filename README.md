@@ -142,14 +142,7 @@ inventory-reservation-engine/
     └── test/java/com/inventory/ # MySQL integration tests
 ```
 
-## Interview talking points
 
-- Why `BigDecimal` is used for currency.
-- Why JDBC statements are parameterized and resources use try-with-resources.
-- How commit and rollback keep reservation/order updates atomic.
-- How `SELECT ... FOR UPDATE` serializes changes to one inventory row.
-- Why a read followed by an unlocked update can oversell under concurrent load.
-- How integration tests verify CRUD, stock validation, rollback safety, and concurrent reservations against MySQL.
 
 ## Current limitations
 
